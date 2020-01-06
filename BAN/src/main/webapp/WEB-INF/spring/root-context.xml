@@ -17,17 +17,22 @@
 		<property name="password" value="${db.password}" />
 	</bean>
 	
-	<bean id='SqlFactory' class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id='sqlSession' class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="DS" />
 		<property name="configLocation" value="classpath:/mybatis-config.xml" />
 		<property name="mapperLocations" value="classpath:/mappers/*Dao.xml" />
 	</bean>
-	<bean id='sqlSession' class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg name="sqlSessionFactory" ref="SqlFactory" />
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSession" />
 	</bean>
-	
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="ban" />
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="DS" />
 	</bean>
+<!-- 	<bean id='sqlSession' class="org.mybatis.spring.SqlSessionTemplate"> -->
+<!-- 		<constructor-arg name="sqlSessionFactory" ref="SqlFactory" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> -->
+<!-- 		<property name="basePackage" value="ban" /> -->
+<!-- 	</bean> -->
 		
 </beans>

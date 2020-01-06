@@ -4,9 +4,23 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com">
 
-	<select id="login" parameterType="hashmap" resultType="hashmap">
-		select * from Member where id =
-		#{id}
+	<select id="page" parameterType="hashmap" resultType="hashmap">
+		SELECT MENU_URL AS MENU_URL
+			  ,MENU_NM  AS MENU_NM
+		  FROM MENU
+		 WHERE USE_YN = '1'
+		   AND MENU_URL = #{menuUrl}
 	</select>
 
+	<insert id="menuInsert" parameterType="hashmap" >
+		
+		<selectKey order="BEFORE" keyProperty="id" resultType="int">
+			SELECT MENU_S.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO MENU(MENU_ID,MENU_URL,MENU_NM,DSC)
+		VALUES(#{id},#{menu_url},#{menu_nm},#{dsc})
+		
+	</insert>
+	
 </mapper>

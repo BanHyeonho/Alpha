@@ -9,9 +9,17 @@
 .vertical-center-16p{
 	margin-top: 16%;
 }
+.vertical-center-12p{
+	margin-top: 12%;
+}
+
+.font-red{
+	color : #a94442;
+}
 
 .embed-responsive-ban{
-	padding-bottom: 50%;
+/* 	padding-bottom: 50%; */
+	height: 96%;
 }
 
 /* 모바일일경우CSS */
@@ -19,9 +27,9 @@
 	.vertical-center-16p{
 		margin-top: 5%;
 	}
-	.embed-responsive-ban{
-		padding-bottom: 100%;
-	}
+/* 	.embed-responsive-ban{ */
+/* 		padding-bottom: 100%; */
+/* 	} */
 }
 
 

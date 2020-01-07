@@ -4,6 +4,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com">
 
+	<!--아이디 중복체크 -->
+	<select id="idChk" parameterType="hashmap" resultType="hashmap">
+		SELECT ID		AS ID
+		  FROM MEMBER
+		 WHERE USE_YN ='1' 
+		   AND ID = #{id}
+	</select>
+	
+	<!--페이지이동 -->
 	<select id="page" parameterType="hashmap" resultType="hashmap">
 		SELECT MENU_URL AS MENU_URL
 			  ,MENU_NM  AS MENU_NM
@@ -12,6 +21,7 @@
 		   AND MENU_URL = #{menuUrl}
 	</select>
 
+	<!-- 화면추가 -->
 	<insert id="menuInsert" parameterType="hashmap" >
 		
 		<selectKey order="BEFORE" keyProperty="id" resultType="int">

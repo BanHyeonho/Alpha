@@ -1,7 +1,5 @@
 package ban.controller;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -93,14 +91,20 @@ public class ComController {
 	
 
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ModelAndView page(HttpServletRequest request) throws Exception {
-
-		Map<String, String> map = ComUtil.getParameterMap(request);
+	public ModelAndView page(HttpServletRequest request){
 		
 		ModelAndView mav = new ModelAndView();
-
-		Map rMap = cs.selectOne( "page" , map);
-		mav.setViewName( String.valueOf(rMap.get("MENU_URL")) );
+		
+		try {
+			
+			Map<String, String> map = ComUtil.getParameterMap(request);
+			Map rMap = cs.selectOne( "page" , map);
+			mav.setViewName( String.valueOf(rMap.get("MENU_URL")) );
+			
+		}catch(Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return mav;
 	}

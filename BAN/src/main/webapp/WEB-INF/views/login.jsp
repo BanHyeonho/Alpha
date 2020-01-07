@@ -48,6 +48,6 @@
 	}
 	
 	function join(){
-		utilMovePage('join');
+		parent.utilMovePage('join');
 	}
 </script>

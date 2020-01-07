@@ -12,11 +12,8 @@ function utilIsNull( val1, val2 ){
 }
 
 function utilMovePage(pageUrl){
-	utilAjax( {
-		menuUrl : pageUrl
-	} , null , function(data){
-		console.log(data);
-	}, '/page');
+	//최상위 iframe src 를 수정한다.
+	$(window.top.document).find('#content').attr('src', '/page?menuUrl=' + pageUrl);
 }
 
 function utilAjax( param , before , success , url , async , global , timeout , error , complete , method , dataType){
@@ -67,4 +64,75 @@ function utilAjax( param , before , success , url , async , global , timeout , e
 	
 	$.ajax(setting);
 }
+
+
+function utilChkPattern( val, type, bool){
+	var pattern_num = /[0-9]/;					// 숫자 
+	var pattern_eng = /[a-zA-Z]/;				// 문자 
+	var pattern_spc = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자
+	var pattern_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; 		// 한글체크
+
+	bool = utilIsNull( bool, false );
+	
+	if(bool){
+		
+		//숫자가 있는경우 true
+		if(utilIsNull( type, '' ) == 'num'){
+			return pattern_num.test(val);
+		}
+		//문자 있는경우 true
+		else if(utilIsNull( type, '' ) == 'eng'){
+			return pattern_eng.test(val);
+		}
+		//특수문자 있는경우 true
+		else if(utilIsNull( type, '' ) == 'spc'){
+			return pattern_spc.test(val);
+		}
+		//한글 있는경우 true
+		else if(utilIsNull( type, '' ) == 'kor'){
+			return pattern_kor.test(val);
+		}
+	}
+	else{
+		
+		//숫자가 없는경우 true
+		if(utilIsNull( type, '' ) == 'num'){
+			return !pattern_num.test(val);
+		}
+		//문자 없는경우 true
+		else if(utilIsNull( type, '' ) == 'eng'){
+			return !pattern_eng.test(val);
+		}
+		//특수문자 없는경우 true
+		else if(utilIsNull( type, '' ) == 'spc'){
+			return !pattern_spc.test(val);
+		}
+		//한글 없는경우 true
+		else if(utilIsNull( type, '' ) == 'kor'){
+			return !pattern_kor.test(val);
+		}
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

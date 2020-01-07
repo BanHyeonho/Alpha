@@ -22,6 +22,12 @@
 <!-- Bans -->
 <link href='/css/banStyle.css' rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/script/comUtil.js"></script>
+
+<!-- 공통으로 실행되어야 할 함수 -->
+<script type="text/javascript">
+//마우스 우클릭방지
+// document.oncontextmenu=function(){return false;}
+</script>
 </head>
 <body>
 </body>

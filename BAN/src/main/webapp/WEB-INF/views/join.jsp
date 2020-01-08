@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="./ban.jsp" %>   
-
 <div class='center-block max-Size-500 vertical-center-12p'>
-	<form class="form-horizontal" id='joinForm'>
+	<form class="form-horizontal" id='joinForm' autocomplete="off">
+		<input type="hidden" id='puK' value='<c:out value="${puK}" />' >
+		
 		<div class="form-group has-feedback has-error">
 			<label for="id" class="col-sm-3 control-label">아이디</label>
 			<div class="col-sm-9">
@@ -60,6 +62,9 @@
 </div>
 
 <script type="text/javascript">
+	
+	var idCheck = false;
+	
 	$( document ).ready(function() {
 		$('#id').focus();
 		$( '#id' ).keyup(function() {
@@ -93,13 +98,23 @@
 					  $("#id").siblings('span').remove();
 					  $("#id").after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
 					  alert('중복된 아이디 입니다.');
+					  idCheck = false;
 				  }
 				  //사용가능 아이디
 				  else{
-					  $("#id").closest('.has-feedback').removeClass('has-error');
-					  $("#id").closest('.has-feedback').addClass('has-success');
-					  $("#id").siblings('span').remove();
-					  $("#id").after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+					  if($('#id').val().length > 0){
+						  $("#id").closest('.has-feedback').removeClass('has-error');
+						  $("#id").closest('.has-feedback').addClass('has-success');
+						  $("#id").siblings('span').remove();
+						  $("#id").after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+						  idCheck = true;						  
+					  }else{
+						  $("#id").closest('.has-feedback').removeClass('has-success');
+						  $("#id").closest('.has-feedback').addClass('has-error');
+						  $("#id").siblings('span').remove();
+						  $("#id").after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+					  }
+					  
 				  }
 				  
 			  } );
@@ -108,6 +123,14 @@
 		
 		$( '#pwd' ).keyup(comparePwd);
 		$( '#pwdChk' ).keyup(comparePwd);
+		
+		$('#joinForm').find('input:last').keydown(function(){
+			if (window.event.keyCode == 13) {
+				// 엔터키가 눌렸을 때 실행할 내용
+		         join();
+		    }
+		});
+		
 	});
 	
 	function comparePwd(){
@@ -148,6 +171,78 @@
 	
 	function join(){
 		
+		if( !confirm('가입하시겠습니까') ){
+			return false;
+		}
+		
+		var id = $('#id').val();
+		var pwd = $('#pwd').val();
+		var pwdChk = $('#pwdChk').val();
+		
+		utilAjax( {
+			'queryId'	: 'com.memberInsert'
+			,'id'		: id
+			,'pwd'		: securePw(pwd)
+			,'name'		: $('#name').val()
+			,'nick'		: $('#nick').val()
+			,'Email'	: $('#Email').val()
+			,'tel'		: $('#tel').val()
+		} , function(){
+			
+			//아이디 체크
+			if(utilChkPattern( id, 'spc', true)){
+				alert('특수문자는 사용할수 없습니다.');
+				$('#id').focus();
+				return false;	
+				
+			}
+			else if(id.length > 20){
+				alert('아이디는 최대 20글자 이내여야 합니다.');
+				$('#id').focus();
+				return false;
+				  
+			}
+			else if(id.length == 0){
+				alert('아이디를 입력하세요');
+				$('#id').focus();
+				return false;
+			}
+			else if(!idCheck){
+				alert('중복된 아이디 입니다.');
+				$('#id').focus();
+				return false;
+			}
+			//비밀번호 체크
+			else if(pwd.length == 0){
+				alert('비밀번호를 입력하세요');
+				$('#pwd').focus();
+				return false;
+			}
+			else if(pwd != pwdChk){
+				alert('비밀번호가 일치하지 않습니다.');
+				$('#pwdChk').focus();
+				return false;
+			}
+			
+		} , function(data){
+			
+			utilMovePage('main');
+			
+		} , '/join' , false, null, null, null, null, null, 'text');
+		
+	}
+	
+	function securePw(pw){
+		
+		var puk = $('#puK').val();
+		// 객체 생성
+ 		var crypt = new JSEncrypt();
+ 
+ 		// 키 설정
+ 		crypt.setPrivateKey(puk);
+ 
+ 		// 암호화
+ 		return crypt.encrypt(pw);
 	}
 	
 	function back(){

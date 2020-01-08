@@ -50,6 +50,19 @@ public class ComServiceImpl implements ComService{
 		// TODO Auto-generated method stub
 		comDao.delete(queryId, map);
 	}
+
+	@Override
+	public void join(String queryId, Map map) throws Exception {
+		// TODO Auto-generated method stub
+		comDao.insert(queryId, map);
+		
+		if( !String.valueOf(map.get("nick")).equals("") 
+		|| !String.valueOf(map.get("Email")).equals("") 
+		|| !String.valueOf(map.get("tel")).equals("") ){
+			comDao.insert("com.memberDetailInsert", map);	  
+		}
+		
+	}
 	
 	
 }

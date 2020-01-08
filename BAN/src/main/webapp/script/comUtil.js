@@ -132,7 +132,3 @@ function utilChkPattern( val, type, bool){
 
 
 
-
-
-
-

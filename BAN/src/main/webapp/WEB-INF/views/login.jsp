@@ -3,7 +3,7 @@
 <%@ include file="./ban.jsp" %>   
 
 <div class='center-block max-Size-500 vertical-center-16p'>
-	<form class="form-horizontal" id='loginForm'>
+	<form class="form-horizontal" id='loginForm' autocomplete="off">
 		<div class="form-group">
 			<label for="loginId" class="col-sm-2 control-label">아이디</label>
 			<div class="col-sm-10">

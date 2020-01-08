@@ -11,6 +11,9 @@
 <!-- Jquery -->
 <script type="text/javascript" src="/script/jquery-3.4.1.min.js"></script>
 
+<!-- 암호화 스크립트 -->
+<script type="text/javascript" src="/script/jsencrypt.min.js"></script>
+
 <!-- Normalize (reset) -->
 <link href='/css/normalize-8.0.1.css' rel="stylesheet" type="text/css" />
 

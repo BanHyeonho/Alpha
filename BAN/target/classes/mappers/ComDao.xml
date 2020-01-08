@@ -12,10 +12,35 @@
 		   AND ID = #{id}
 	</select>
 	
+	<!-- 회원가입 -->
+	<insert id="memberInsert" parameterType="hashmap" >
+		
+		<selectKey order="BEFORE" keyProperty="MID" resultType="int">
+			SELECT MEMBER_S.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO MEMBER(MEMBER_ID, ID, PWD, NAME)
+		VALUES(#{MID}, #{id}, #{pwd}, #{name})
+		
+	</insert>
+	
+	<!-- 회원가입 상세 -->
+	<insert id="memberDetailInsert" parameterType="hashmap" >
+		
+		<selectKey order="BEFORE" keyProperty="MDID" resultType="int">
+			SELECT MEMBER_DETAIL_S.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO MEMBER_DETAIL(MEMBER_ID, MEMBER_DETAIL_ID, NICK, EMAIL, TEL)
+		VALUES(#{MID,jdbcType=INTEGER}, #{MDID,jdbcType=INTEGER}, #{nick,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR})
+		
+	</insert>
+	
 	<!--페이지이동 -->
 	<select id="page" parameterType="hashmap" resultType="hashmap">
 		SELECT MENU_URL AS MENU_URL
 			  ,MENU_NM  AS MENU_NM
+			  ,SECURE_YN  AS SECURE_YN
 		  FROM MENU
 		 WHERE USE_YN = '1'
 		   AND MENU_URL = #{menuUrl}

@@ -17,4 +17,5 @@ public interface ComService {
 
 	public void delete(String queryId, Map map) throws Exception;
 
+	public void join(String queryId, Map map) throws Exception;
 }

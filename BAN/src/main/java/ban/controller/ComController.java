@@ -1,5 +1,10 @@
 package ban.controller;
 
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Locale;
 import java.util.Map;
 
@@ -89,7 +94,18 @@ public class ComController {
 		return "notFoundQuery";
 	}
 	
-
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	public @ResponseBody Object join(HttpServletRequest request) throws Exception {
+	
+		Map<String, String> map = ComUtil.getParameterMap(request);
+		
+		String pwd =ComUtil.decrypt( request.getSession().getAttribute("prK").toString(), map.get("pwd") );
+		map.put("pwd", pwd);
+		cs.join( map.get("queryId") , map);
+		
+		return "success";
+	}
+	
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ModelAndView page(HttpServletRequest request){
 		
@@ -100,6 +116,27 @@ public class ComController {
 			Map<String, String> map = ComUtil.getParameterMap(request);
 			Map rMap = cs.selectOne( "page" , map);
 			mav.setViewName( String.valueOf(rMap.get("MENU_URL")) );
+			
+			//보안키가 있는 화면
+			if( String.valueOf(rMap.get("SECURE_YN")).equals("1") ) {
+				
+				KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+				keyPairGenerator.initialize(1024, new SecureRandom());
+				
+				KeyPair keyPair = keyPairGenerator.genKeyPair();
+				Key publicKey = keyPair.getPublic();
+				Key privateKey = keyPair.getPrivate();
+				
+				request.getSession().setAttribute("puK", Base64.getEncoder().encodeToString(publicKey.getEncoded()));
+				request.getSession().setAttribute("prK", Base64.getEncoder().encodeToString(privateKey.getEncoded()));
+			}
+			//없는 화면
+			else {
+				request.getSession().removeAttribute("puK");
+				request.getSession().removeAttribute("prK");
+			}
+			
+			
 			
 		}catch(Exception e) {
 			// TODO Auto-generated catch block

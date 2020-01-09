@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,8 @@ public class ComController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ComController.class);
 	
+	private Object rObj = null;
+	
 	@Autowired
 	ComService cs;
 	/**
@@ -51,99 +54,54 @@ public class ComController {
 	}
 	
 	@RequestMapping(value = "/ajax")
-	public @ResponseBody Object ajax(HttpServletRequest request) {
+	public @ResponseBody Object ajax(HttpServletRequest request ,HttpServletResponse response) {
 	
-		Map<String, String> map = ComUtil.getParameterMap(request);
-		
 		try {
-			
-			//SELECT One
-			if( String.valueOf( map.get("queryId") ).contains(".1_") ) {
-					
-				return cs.selectOne( map.get("queryId").replace(".1_",".") , map);
-			}
-			//SELECT
-			else if( String.valueOf( map.get("queryId") ).contains(".S_") ) {
-				
-				return cs.selectList( map.get("queryId").replace(".S_",".") , map);
-			}
-			//INSERT
-			else if( String.valueOf( map.get("queryId") ).contains(".I_") ) {
-				cs.insert( map.get("queryId").replace(".I_",".") , map);
-				return "inserted";
-			}
-			//UPDATE
-			else if( String.valueOf( map.get("queryId") ).contains(".U_") ) {
-				cs.update( map.get("queryId").replace(".U_",".") , map);
-				return "updated";
-			}
-			//DELETE
-			else if( String.valueOf( map.get("queryId") ).contains(".D_") ) {
-				
-				cs.delete( map.get("queryId").replace(".D_",".") , map);
-				return "deleted";
-			}
-			
-			
+			rObj = cs.ajax(request);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			response.setStatus(9998);
+			rObj = e.getMessage();
+			logger.error((String) rObj);
+		}
+	
+		return rObj;
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public @ResponseBody Object login(HttpServletRequest request ,HttpServletResponse response){
+	
+		try {
+			rObj = cs.login(request);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			response.setStatus(9998);
+			rObj = e.getMessage();
+			logger.error((String) rObj);
 		}
 		
-		
-		return "notFoundQuery";
+		return rObj;
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public @ResponseBody Object join(HttpServletRequest request) throws Exception {
-	
-		Map<String, String> map = ComUtil.getParameterMap(request);
+	public @ResponseBody Object join(HttpServletRequest request ,HttpServletResponse response){
 		
-		String pwd =ComUtil.decrypt( request.getSession().getAttribute("prK").toString(), map.get("pwd") );
-		map.put("pwd", pwd);
-		cs.join( map.get("queryId") , map);
+		try {
+			rObj = cs.join( request );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			response.setStatus(9998);
+			rObj = e.getMessage();
+			logger.error((String) rObj);
+		}
 		
-		return "success";
+		return rObj;
 	}
 	
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ModelAndView page(HttpServletRequest request){
+	public ModelAndView page(HttpServletRequest request) throws Exception{
 		
-		ModelAndView mav = new ModelAndView();
-		
-		try {
-			
-			Map<String, String> map = ComUtil.getParameterMap(request);
-			Map rMap = cs.selectOne( "page" , map);
-			mav.setViewName( String.valueOf(rMap.get("MENU_URL")) );
-			
-			//보안키가 있는 화면
-			if( String.valueOf(rMap.get("SECURE_YN")).equals("1") ) {
-				
-				KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-				keyPairGenerator.initialize(1024, new SecureRandom());
-				
-				KeyPair keyPair = keyPairGenerator.genKeyPair();
-				Key publicKey = keyPair.getPublic();
-				Key privateKey = keyPair.getPrivate();
-				
-				request.getSession().setAttribute("puK", Base64.getEncoder().encodeToString(publicKey.getEncoded()));
-				request.getSession().setAttribute("prK", Base64.getEncoder().encodeToString(privateKey.getEncoded()));
-			}
-			//없는 화면
-			else {
-				request.getSession().removeAttribute("puK");
-				request.getSession().removeAttribute("prK");
-			}
-			
-			
-			
-		}catch(Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return mav;
+		return cs.page(request);
 	}
 	
 }

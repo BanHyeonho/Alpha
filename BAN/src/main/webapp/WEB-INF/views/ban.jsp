@@ -30,6 +30,7 @@
 <script type="text/javascript">
 //마우스 우클릭방지
 // document.oncontextmenu=function(){return false;}
+
 </script>
 </head>
 <body>

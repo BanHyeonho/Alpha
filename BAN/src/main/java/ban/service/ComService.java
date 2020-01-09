@@ -1,21 +1,17 @@
 package ban.service;
 
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.servlet.ModelAndView;
 
 public interface ComService {
+
+	public Object ajax(HttpServletRequest request) throws Exception;
 	
-	public List<Map> selectList(String queryId, Map param) throws Exception;
+	public String join(HttpServletRequest request) throws Exception;
 
-	public Map selectOne(String queryId, Map param) throws Exception;
+	public String login(HttpServletRequest request) throws Exception;
 
-	public Map selectOne2(String queryId, String param) throws Exception;
+	public ModelAndView page(HttpServletRequest request) throws Exception;
 	
-	public String insert(String queryId, Map map) throws Exception;
-
-	public void update(String queryId, Map map) throws Exception;
-
-	public void delete(String queryId, Map map) throws Exception;
-
-	public void join(String queryId, Map map) throws Exception;
 }

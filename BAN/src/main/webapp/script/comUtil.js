@@ -44,7 +44,7 @@ function utilAjax( param , before , success , url , async , global , timeout , e
 	
 	var vComplete = utilIsNull( complete , function(data){
 		//ajax통신 완료시 실행함수
-		console.log('complete' , data);
+		//console.log('complete' , data);
 	} );
 	
 	var setting = {
@@ -116,16 +116,71 @@ function utilChkPattern( val, type, bool){
 }
 
 
+function utilSecurePw(pw , puk){	//암호화할 비밀번호 , 공개키
+	
+	// 객체 생성
+	var crypt = new JSEncrypt();
+
+	// 키 설정
+	crypt.setPrivateKey(puk);
+
+	// 암호화
+	return crypt.encrypt(pw);
+}
+
+function utilSetCookie(cName, cValue, cDay, cHour, cMinutes, cSec, cMillisec) {
+	var expire = new Date();
+ 
+	var vHour = utilIsNull( cHour, '' ) === "" ? expire.getHours() : cHour;
+	var vMinutes = utilIsNull( cMinutes, '' ) === "" ? expire.getMinutes() : cMinutes;
+	var vSec = utilIsNull(cSec, '') === "" ? expire.getSeconds() : cSec;
+	var vMillisec = utilIsNull(cMillisec, '') === "" ? expire.getMilliseconds() : cMillisec;
+
+	expire.setDate(expire.getDate() + cDay);
+	expire.setHours(vHour, vMinutes, vSec, vMillisec);
+	
+	cookies = cName + '=' + escape(cValue) + '; path=/ '; 
+	
+	if (typeof cDay != 'undefined')
+		cookies += ';expires=' + expire.toGMTString() + ';';
+	document.cookie = cookies;
+}
+
+function utilGetCookie(cName) {
+	cName = cName + '=';
+	var cookieData = document.cookie;
+	var start = cookieData.indexOf(cName);
+	var cValue = '';
+	if (start != -1) {
+		start += cName.length;
+		var end = cookieData.indexOf(';', start);
+		if (end == -1)
+			end = cookieData.length;
+		cValue = cookieData.substring(start, end);
+	}
+	return unescape(cValue);
+}
 
 
+function utilNoCtrl(){
+//반드시 document.ready 안에 넣을것. 
+//no-copy-paste클래스 만 복사,잘라내기 막기
+	
+	var ctrlDown = false;
+	var ctrlKey = 17, vKey = 86, cKey = 67;
 
+	$(document).keydown(function(e){
+		
+		if (e.keyCode == ctrlKey) ctrlDown = true;
+		
+	}).keyup(function(e){
+		if (e.keyCode == ctrlKey) ctrlDown = false;
+	});
 
-
-
-
-
-
-
+	$(".no-copy-paste").keydown(function(e){
+		if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) return false;
+	});
+}
 
 
 

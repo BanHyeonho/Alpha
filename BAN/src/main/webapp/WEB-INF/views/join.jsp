@@ -67,6 +67,8 @@
 	
 	$( document ).ready(function() {
 		$('#id').focus();
+		
+		//아이디 입력시 자동 중복체크
 		$( '#id' ).keyup(function() {
 			
 			utilAjax( {
@@ -121,9 +123,11 @@
 			  
 		});
 		
+		//비밀번호 비교
 		$( '#pwd' ).keyup(comparePwd);
 		$( '#pwdChk' ).keyup(comparePwd);
 		
+		//마지막 입력태그에서 엔터키 입력시 가입실행
 		$('#joinForm').find('input:last').keydown(function(){
 			if (window.event.keyCode == 13) {
 				// 엔터키가 눌렸을 때 실행할 내용
@@ -133,6 +137,7 @@
 		
 	});
 	
+	//비밀번호 비교
 	function comparePwd(){
 		var pwd = $('#pwd').val();
 		var pwdChk = $('#pwdChk').val();
@@ -168,7 +173,7 @@
 		}
 	}
 	
-	
+	//회원가입 프로세스 실행
 	function join(){
 		
 		if( !confirm('가입하시겠습니까') ){
@@ -178,11 +183,12 @@
 		var id = $('#id').val();
 		var pwd = $('#pwd').val();
 		var pwdChk = $('#pwdChk').val();
+		var puk = $('#puK').val();
 		
 		utilAjax( {
 			'queryId'	: 'com.memberInsert'
 			,'id'		: id
-			,'pwd'		: securePw(pwd)
+			,'pwd'		: utilSecurePw(pwd , puk)
 			,'name'		: $('#name').val()
 			,'nick'		: $('#nick').val()
 			,'Email'	: $('#Email').val()
@@ -232,19 +238,7 @@
 		
 	}
 	
-	function securePw(pw){
-		
-		var puk = $('#puK').val();
-		// 객체 생성
- 		var crypt = new JSEncrypt();
- 
- 		// 키 설정
- 		crypt.setPrivateKey(puk);
- 
- 		// 암호화
- 		return crypt.encrypt(pw);
-	}
-	
+	//로그인화면으로 이동
 	function back(){
 		utilMovePage('login');
 	}

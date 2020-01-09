@@ -9,9 +9,23 @@
 		SELECT ID		AS ID
 		  FROM MEMBER
 		 WHERE USE_YN ='1' 
-		   AND ID = #{id}
+		   AND ID = #{id,jdbcType=VARCHAR}
 	</select>
-	
+
+	<!--로그인 -->
+	<select id="login" parameterType="hashmap" resultType="hashmap">
+		SELECT A.ID			AS ID
+			 , A.NAME		AS NAME
+			 , A.CDT		AS CDT
+			 , A.USE_YN		AS USE_YN
+			 , B.NICK		AS NICK
+			 , B.EMAIL		AS EMAIL
+			 , B.TEL		AS TEL
+		  FROM MEMBER A
+	 LEFT JOIN MEMBER_DETAIL B ON A.MEMBER_ID = B.MEMBER_ID
+		 WHERE A.ID = #{id,jdbcType=VARCHAR}
+	</select>
+		
 	<!-- 회원가입 -->
 	<insert id="memberInsert" parameterType="hashmap" >
 		
@@ -20,7 +34,7 @@
 		</selectKey>
 		
 		INSERT INTO MEMBER(MEMBER_ID, ID, PWD, NAME)
-		VALUES(#{MID}, #{id}, #{pwd}, #{name})
+		VALUES(#{MID,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
 		
 	</insert>
 	
@@ -43,7 +57,7 @@
 			  ,SECURE_YN  AS SECURE_YN
 		  FROM MENU
 		 WHERE USE_YN = '1'
-		   AND MENU_URL = #{menuUrl}
+		   AND MENU_URL = #{menuUrl,jdbcType=VARCHAR}
 	</select>
 
 	<!-- 화면추가 -->
@@ -54,7 +68,7 @@
 		</selectKey>
 		
 		INSERT INTO MENU(MENU_ID,MENU_URL,MENU_NM,DSC)
-		VALUES(#{id},#{menu_url},#{menu_nm},#{dsc})
+		VALUES(#{id,jdbcType=INTEGER},#{menu_url,jdbcType=VARCHAR},#{menu_nm,jdbcType=VARCHAR},#{dsc,jdbcType=VARCHAR})
 		
 	</insert>
 	

@@ -38,6 +38,12 @@ public class ComServiceImpl implements ComService{
 			comDao.insert("com.memberDetailInsert", map);	  
 		}
 		
+		//로그인 성공
+		request.getSession().setAttribute("LOGIN_CHK", "1");
+		request.getSession().setAttribute("ID", map.get("id"));
+		request.getSession().setAttribute("NAME", map.get("name"));
+		request.getSession().setAttribute("NICK", map.get("nick"));
+		
 		return "1";
 	}
 
@@ -62,12 +68,10 @@ public class ComServiceImpl implements ComService{
 		}
 		
 		//로그인 성공
+		request.getSession().setAttribute("LOGIN_CHK", "1");
 		request.getSession().setAttribute("ID", rMap.get("ID"));
 		request.getSession().setAttribute("NAME", rMap.get("NAME"));
-		request.getSession().setAttribute("CDT", rMap.get("CDT"));
 		request.getSession().setAttribute("NICK", rMap.get("NICK"));
-		request.getSession().setAttribute("EMAIL", rMap.get("EMAIL"));
-		request.getSession().setAttribute("TEL", rMap.get("TEL"));
 		
 		return "1";
 	}
@@ -79,7 +83,7 @@ public class ComServiceImpl implements ComService{
 		
 		Map<String, String> map = ComUtil.getParameterMap(request);
 		Map rMap = comDao.selectOne( "page" , map);
-		mav.setViewName( String.valueOf(rMap.get("MENU_URL")) );
+		mav.setViewName( String.valueOf(rMap.get("PATH")) + String.valueOf(rMap.get("MENU_URL")) );
 		
 		//보안키가 있는 화면
 		if( String.valueOf(rMap.get("SECURE_YN")).equals("1") ) {
@@ -99,6 +103,8 @@ public class ComServiceImpl implements ComService{
 			request.getSession().removeAttribute("puK");
 			request.getSession().removeAttribute("prK");
 		}
+		
+		request.getSession().setAttribute("menuNm", String.valueOf(rMap.get("MENU_NM")) );
 		
 		return mav;
 	}

@@ -1,31 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div id='header'>
-	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-pad-margin" style="background-color:#eee;">
-       		<div class="col-lg-1 col-md-2 col-sm-3 col-xs-12" style="background-color:#aaa;">
-       			<p>MENU</p>
+<div id='header' style="display: none;">
+	<div class="row black">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-pad-margin">
+       		<div class="col-lg-1 col-md-2 col-sm-3 col-xs-12">
+       			<a href='/' ><img src="/img/logo.png" width="100%"></a>
        		</div>
                  
-            <div class="col-lg-10 col-md-8 col-sm-7 col-xs-12" style="background-color:#bbb;">
+            <div class="col-lg-10 col-md-8 col-sm-7 col-xs-12">
             	<ul class="list-inline">	
-  					<li>Content1</li>
-  					<li>Content2</li>
-  					<li>Content3</li>
+  					<li class='white'>Content1</li>
+  					<li class='white'>Content2</li>
+  					<li class='white'>시스템관리</li>
 				</ul>
             </div>
                  
             <div class="visible-lg-block visible-md-block visible-sm-block">
-                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12" style="background-color:#dfd;">
-                    <p>default option</p>
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+                    <a href='#' class='dropdown-toggle' data-toggle="dropdown" aria-expanded="false" ><span class="glyphicon glyphicon-user white pull-right" style="font-size: -webkit-xxx-large; padding-top:4px;" ></span></a>
+                     <ul class="dropdown-menu" role="menu" style='left: -1;'>
+					    <li><a href="javascript:myPage();">나의 페이지</a></li>
+					    <li class="divider"></li>
+					    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;로그아웃</a></li>
+					  </ul>
                 </div>
             </div>
              
             <div class="visible-xs-block">
-                <div class="col-xs-12" style="background-color:#fdd;">
+                <div class="col-xs-12">
                     <p>small option</p>
                 </div>
             </div>
          </div>
        </div>
 </div>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		
+	});
+	
+	function myPage(){
+		$('#content').attr('src', '/page?menuUrl=myPage');
+	}
+</script>

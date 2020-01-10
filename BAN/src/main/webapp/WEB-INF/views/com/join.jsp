@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="./ban.jsp" %>   
+<%@ include file="../ban.jsp" %>   
 <div class='center-block max-Size-500 vertical-center-12p'>
+	<h1 class='col-sm-offset-2 col-sm-10' style='margin-bottom: 20px;'><c:out value="${menuNm}" /></h1>
 	<form class="form-horizontal" id='joinForm' autocomplete="off">
 		<input type="hidden" id='puK' value='<c:out value="${puK}" />' >
 		

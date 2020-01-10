@@ -83,6 +83,14 @@ public class ComController {
 		return rObj;
 	}
 	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request ,HttpServletResponse response){
+	
+		request.getSession().invalidate();
+		
+		return "redirect:/";
+	}
+	
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public @ResponseBody Object join(HttpServletRequest request ,HttpServletResponse response){
 		

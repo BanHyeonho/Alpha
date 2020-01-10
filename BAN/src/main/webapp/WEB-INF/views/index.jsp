@@ -26,7 +26,21 @@
 	</div>
 <script type="text/javascript">
 	$( document ).ready(function() {
-		$('#content').attr('src', '/page?menuUrl=login');
+
+		<c:choose>
+		    <c:when test="${LOGIN_CHK eq '1'}">
+	    		$('#header').show();
+		    	$('#content').attr('src', '/page?menuUrl=main');
+		    </c:when> 
+		    <c:otherwise>
+		    	$('#header').hide();
+		    	$('#content').attr('src', '/page?menuUrl=login');
+		    </c:otherwise>
+		</c:choose>
+
+		
+		
+		
 	});
 </script>
 </body>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="./ban.jsp" %>   
+<%@ include file="../ban.jsp" %>   
 
 <div class='center-block max-Size-500 vertical-center-16p'>
 	<form class="form-horizontal" id='loginForm' autocomplete="off">
@@ -50,7 +50,7 @@
 			$("#remember").prop("checked", true);
 		}
 		
-		$('#loginForm').find('input[class=form-control]:last').keydown(function(){
+		$('#loginForm').find('input[class^=form-control]:last').keydown(function(){
 			if (window.event.keyCode == 13) {
 				// 엔터키가 눌렸을 때 실행할 내용
 		         login();
@@ -99,8 +99,8 @@
 					utilSetCookie('loginPwd', '', 365);
 				}
 				
+				parent.$('#header').show();
 				utilMovePage('main');
-				
 			}
 			//탈퇴한 회원
 			else if(data == '0'){

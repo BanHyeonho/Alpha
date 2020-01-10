@@ -6,6 +6,26 @@
 /* 	width: 100%; */
 }
 
+.white{
+	color: #FFFFFF;
+}
+
+.black{
+	background-color: #34314C;
+}
+
+.red{
+	background-color: #FF7473;
+}
+
+.yellow{
+	background-color: #FFC952;
+}
+
+.blue{
+	background-color: #47B8E0;
+}
+
 .vertical-center-16p{
 	margin-top: 16%;
 }

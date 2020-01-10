@@ -20,6 +20,13 @@
 	<resources mapping="/img/**" location="/img/" />
 	<resources mapping="/favicon.ico" location="/favicon.ico" />
 
+	<interceptors>
+		<interceptor>
+			<mapping path="/*" />
+			<beans:bean class="ban.util.Interceptor" />
+		</interceptor>
+	</interceptors>
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />

@@ -3,7 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../ban.jsp" %>   
 <div class='center-block max-Size-500 vertical-center-12p'>
-	<h1 class='col-sm-offset-2 col-sm-10' style='margin-bottom: 20px;'><c:out value="${menuNm}" /></h1>
+	<div class="page-header">
+		<h1 class="col-sm-offset-3"><c:out value="${menuNm}" /></h1>
+	</div>
+	
 	<form class="form-horizontal" id='joinForm' autocomplete="off">
 		<input type="hidden" id='puK' value='<c:out value="${puK}" />' >
 		
@@ -17,7 +20,7 @@
 		<div class="form-group has-feedback has-error">
 			<label for="pwd" class="col-sm-3 control-label">비밀번호</label>
 			<div class="col-sm-9">
-				<input type="password" class="form-control" id="pwd" placeholder="Password">
+				<input type="password" class="form-control no-copy-paste" id="pwd" placeholder="Password">
 				<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
 			</div>
 			<span class='col-sm-offset-3 col-sm-9 font-red' style='display: none;' id='pwdText'>비밀번호가 일치하지 않습니다.</span>
@@ -25,7 +28,7 @@
 		<div class="form-group has-feedback has-error">
 			<label for="pwdChk" class="col-sm-3 control-label">비밀번호 확인</label>
 			<div class="col-sm-9">
-				<input type="password" class="form-control" id="pwdChk" placeholder="Password">
+				<input type="password" class="form-control no-copy-paste" id="pwdChk" placeholder="Password">
 				<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
 			</div>
 		</div>
@@ -67,6 +70,8 @@
 	var idCheck = false;
 	
 	$( document ).ready(function() {
+		utilNoCtrl();
+		
 		$('#id').focus();
 		
 		//아이디 입력시 자동 중복체크
@@ -129,7 +134,7 @@
 		$( '#pwdChk' ).keyup(comparePwd);
 		
 		//마지막 입력태그에서 엔터키 입력시 가입실행
-		$('#joinForm').find('input:last').keydown(function(){
+		$('#joinForm').find('input[class^=form-control]:last').keydown(function(){
 			if (window.event.keyCode == 13) {
 				// 엔터키가 눌렸을 때 실행할 내용
 		         join();
@@ -222,6 +227,11 @@
 			//비밀번호 체크
 			else if(pwd.length == 0){
 				alert('비밀번호를 입력하세요');
+				$('#pwd').focus();
+				return false;
+			}
+			else if( pwd.search(/\s/) != -1 ){		// -1 일경우 공백없음
+				alert('비밀번호에 공백을 입력할수 없습니다.');
 				$('#pwd').focus();
 				return false;
 			}

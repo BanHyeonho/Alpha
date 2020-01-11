@@ -12,6 +12,20 @@
 		   AND ID = #{id,jdbcType=VARCHAR}
 	</select>
 
+	<!--개인정보 조회 -->
+	<select id="myInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT A.ID			AS ID
+			 , A.NAME		AS NAME
+			 , A.CDT		AS CDT
+			 , A.USE_YN		AS USE_YN
+			 , B.NICK		AS NICK
+			 , B.EMAIL		AS EMAIL
+			 , B.TEL		AS TEL
+		  FROM MEMBER A
+	 LEFT JOIN MEMBER_DETAIL B ON A.MEMBER_ID = B.MEMBER_ID
+		 WHERE A.ID = #{LOGIN_ID,jdbcType=VARCHAR}
+	</select>
+	
 	<!--로그인 -->
 	<select id="login" parameterType="hashmap" resultType="hashmap">
 		SELECT A.ID			AS ID

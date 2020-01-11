@@ -6,6 +6,10 @@
 /* 	width: 100%; */
 }
 
+.right-border{
+	border-right: 1px solid #eee;
+}
+
 .white{
 	color: #FFFFFF;
 }
@@ -47,9 +51,9 @@
 	.vertical-center-16p{
 		margin-top: 5%;
 	}
-/* 	.embed-responsive-ban{ */
-/* 		padding-bottom: 100%; */
-/* 	} */
+	.right-border{
+		border-right: 0;
+	}
 }
 
 

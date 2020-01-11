@@ -17,7 +17,7 @@
                  
             <div class="visible-lg-block visible-md-block visible-sm-block">
                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
-                    <a href='#' class='dropdown-toggle' data-toggle="dropdown" aria-expanded="false" ><span class="glyphicon glyphicon-user white pull-right" style="font-size: -webkit-xxx-large; padding-top:4px;" ></span></a>
+                    <a href='#' class='dropdown-toggle' data-toggle="dropdown" aria-expanded="false" ><span class="glyphicon glyphicon-user white pull-right" style="font-size: xx-large; padding-top:10px;" ></span></a>
                      <ul class="dropdown-menu" role="menu" style='left: -1;'>
 					    <li><a href="javascript:myPage();">나의 페이지</a></li>
 					    <li class="divider"></li>
@@ -28,7 +28,12 @@
              
             <div class="visible-xs-block">
                 <div class="col-xs-12">
-                    <p>small option</p>
+                    <a href='#' class='dropdown-toggle' data-toggle="dropdown" aria-expanded="false" ><span class="glyphicon glyphicon-user white pull-right" style="font-size: xx-large; padding-top:10px;" ></span></a>
+                     <ul class="dropdown-menu col-xs-12" role="menu" style='left: -1;'>
+					    <li><a href="javascript:myPage();">나의 페이지</a></li>
+					    <li class="divider"></li>
+					    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;로그아웃</a></li>
+					  </ul>
                 </div>
             </div>
          </div>

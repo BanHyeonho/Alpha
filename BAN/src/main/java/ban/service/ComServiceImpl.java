@@ -40,7 +40,7 @@ public class ComServiceImpl implements ComService{
 		
 		//로그인 성공
 		request.getSession().setAttribute("LOGIN_CHK", "1");
-		request.getSession().setAttribute("ID", map.get("id"));
+		request.getSession().setAttribute("LOGIN_ID", map.get("id"));
 		request.getSession().setAttribute("NAME", map.get("name"));
 		request.getSession().setAttribute("NICK", map.get("nick"));
 		
@@ -69,7 +69,7 @@ public class ComServiceImpl implements ComService{
 		
 		//로그인 성공
 		request.getSession().setAttribute("LOGIN_CHK", "1");
-		request.getSession().setAttribute("ID", rMap.get("ID"));
+		request.getSession().setAttribute("LOGIN_ID", rMap.get("ID"));
 		request.getSession().setAttribute("NAME", rMap.get("NAME"));
 		request.getSession().setAttribute("NICK", rMap.get("NICK"));
 		
@@ -113,6 +113,8 @@ public class ComServiceImpl implements ComService{
 	public Object ajax(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
 		Map<String, String> map = ComUtil.getParameterMap(request);
+		
+		map.put("LOGIN_ID",	 String.valueOf(request.getSession().getAttribute("LOGIN_ID")) );
 		
 		//SELECT One
 		if( String.valueOf( map.get("queryId") ).contains(".1_") ) {

@@ -19,7 +19,7 @@
 	
 	<!-- content -->
 	<div class='embed-responsive embed-responsive-ban'>
-		<iframe id='content' class='embed-responsive-item' allowfullscreen scrolling="no"></iframe>	
+		<iframe id='content' class='embed-responsive-item' allowfullscreen></iframe>	
 	</div>
 	
 	<!-- END container-fluid -->

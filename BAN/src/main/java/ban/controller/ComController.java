@@ -1,12 +1,6 @@
 package ban.controller;
 
-import java.security.Key;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.SecureRandom;
-import java.util.Base64;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ban.service.ComService;
-import ban.util.ComUtil;
 
 /**
  * Handles requests for the application home page.

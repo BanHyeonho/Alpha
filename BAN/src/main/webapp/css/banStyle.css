@@ -10,6 +10,14 @@
 	border-right: 1px solid #eee;
 }
 
+.left-border{
+	border-left: 1px solid #eee;
+}
+
+.bottom-border{
+	border-bottom: 1px solid #eee;
+}
+
 .white{
 	color: #FFFFFF;
 }
@@ -51,8 +59,13 @@
 	.vertical-center-16p{
 		margin-top: 5%;
 	}
+	
 	.right-border{
 		border-right: 0;
+	}
+	
+	.left-border{
+		border-left: 0;
 	}
 }
 

@@ -14,4 +14,6 @@ public interface ComService {
 
 	public ModelAndView page(HttpServletRequest request) throws Exception;
 	
+	public String pwdChg(HttpServletRequest request) throws Exception;
+	
 }

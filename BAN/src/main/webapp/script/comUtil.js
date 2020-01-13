@@ -39,7 +39,7 @@ function utilAjax( param , before , success , url , async , global , timeout , e
 	var vError = utilIsNull( error , function(data){
 		//ajax통신 실패시 실행함수
 		console.log('error' , data);
-		alert('error' , data);
+		alert(data.responseText);
 	} );
 	
 	var vComplete = utilIsNull( complete , function(data){
@@ -59,7 +59,8 @@ function utilAjax( param , before , success , url , async , global , timeout , e
 			,success	: vSuccess
 			,error 		: vError
 			,complete 	: vComplete
-			
+			,contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+			,cache		: false
 	};
 	
 	$.ajax(setting);

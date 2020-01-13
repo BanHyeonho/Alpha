@@ -2,9 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../ban.jsp" %>   
 
-<div class='center-block max-Size-500 vertical-center-16p'>
-
-환영합니다.
+<div class='center-block'>
+	<div class='col-sm-12 col-md-2 left-border pull-right'>
+		<div class='col-md-12 bottom-border'>
+			<label>최근사용메뉴</label>
+		</div>
+		<div class='col-md-12'>
+			<label>즐겨찾기</label>
+		</div>
+	</div>
+	<div class='col-sm-12 col-md-10'>
+		<div class='col-md-12'>
+			<label>내용</label>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">

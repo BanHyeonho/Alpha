@@ -37,11 +37,13 @@
 		    	$('#content').attr('src', '/page?menuUrl=login');
 		    </c:otherwise>
 		</c:choose>
-
-		
-		
-		
+		$('#content').attr('onload','fixHeight()');
 	});
+	
+	function fixHeight(){
+		var childHei = $('#content').contents().children().css('height');
+		$('#content').parent().css({'min-height' : childHei});
+	}
 </script>
 </body>
 </html>

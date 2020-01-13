@@ -243,9 +243,10 @@
 			
 		} , function(data){
 			
+			parent.$('#header').show();
 			utilMovePage('main');
 			
-		} , '/join' , false, null, null, null, null, null, 'text');
+		} , '/join' , false);
 		
 	}
 	

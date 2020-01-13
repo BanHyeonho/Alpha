@@ -186,10 +186,40 @@
 			}
 			
 		} , function(data){
-			console.log(data);
+			if(data == '1'){
+				alert('비밀번호가 변경되었습니다.');
+				$('#oldPwd').val('');
+				$('#pwd').val('');
+				$('#pwdChk').val('');
+				$("#pwd").closest('.has-feedback').removeClass('has-success');
+				$("#pwd").closest('.has-feedback').addClass('has-error');
+				$("#pwd").siblings('span').remove();
+				$("#pwd").after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+				$("#pwdChk").closest('.has-feedback').removeClass('has-success');
+				$("#pwdChk").closest('.has-feedback').addClass('has-error');
+				$("#pwdChk").siblings('span').remove();
+				$("#pwdChk").after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+			}
 			
-		} , '/pwdChg' , false, null, null, null, null, null, 'text');
+		} , '/pwdChg' , false);
 		
 	}
 	
+	function chgMyInfo(){
+		
+		utilAjax( {
+			'queryId'	: 'com.U_myInfoChg'
+			,'name'		: $('#name').val()
+			,'nick'		: $('#nick').val()
+			,'Email'	: $('#Email').val()
+			,'tel'		: $('#tel').val()
+		} , null, function(data){
+			
+			if(data.updated > 0){
+				alert('개인정보가 변경되었습니다.');	
+			}
+			
+		} , null , false);
+		
+	}
 </script>

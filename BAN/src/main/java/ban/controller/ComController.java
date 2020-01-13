@@ -98,6 +98,21 @@ public class ComController {
 		
 		return rObj;
 	}
+
+	@RequestMapping(value = "/pwdChg", method = RequestMethod.POST)
+	public @ResponseBody Object pwdChg(HttpServletRequest request ,HttpServletResponse response){
+		
+		try {
+			rObj = cs.pwdChg( request );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			response.setStatus(9998);
+			rObj = e.getMessage();
+			logger.error((String) rObj);
+		}
+		
+		return rObj;
+	}
 	
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ModelAndView page(HttpServletRequest request) throws Exception{

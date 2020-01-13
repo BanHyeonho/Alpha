@@ -30,12 +30,12 @@ public class ComDao {
 		return String.valueOf(map.get("seq_pk"));
 	}
 
-	public void update(String queryId, Map map) throws Exception {
-		sqlSession.update(queryId, map);
+	public int update(String queryId, Map map) throws Exception {
+		return sqlSession.update(queryId, map);
 	}
 
-	public void delete(String queryId, Map map) throws Exception {
-		sqlSession.delete(queryId, map);
+	public int delete(String queryId, Map map) throws Exception {
+		return sqlSession.delete(queryId, map);
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,12 +32,6 @@ public class ComServiceImpl implements ComService{
 		String pwd = ComUtil.decrypt( request.getSession().getAttribute("prK").toString(), map.get("pwd") );
 		map.put("pwd", pwd);
 		comDao.insert(map.get("queryId"), map);
-		
-		if( !map.get("nick").equals("") 
-		|| !map.get("Email").equals("") 
-		|| !map.get("tel").equals("") ){
-			comDao.insert("com.memberDetailInsert", map);	  
-		}
 		
 		//로그인 성공
 		request.getSession().setAttribute("LOGIN_CHK", "1");
@@ -116,6 +111,8 @@ public class ComServiceImpl implements ComService{
 		
 		map.put("LOGIN_ID",	 String.valueOf(request.getSession().getAttribute("LOGIN_ID")) );
 		
+		Map<String, Object> rMap = new HashMap<String, Object>();
+		
 		//SELECT One
 		if( String.valueOf( map.get("queryId") ).contains(".1_") ) {
 				
@@ -128,22 +125,50 @@ public class ComServiceImpl implements ComService{
 		}
 		//INSERT
 		else if( String.valueOf( map.get("queryId") ).contains(".I_") ) {
-			comDao.insert( map.get("queryId").replace(".I_",".") , map);
-			return "inserted";
+			
+			rMap.put("inserted", comDao.insert( map.get("queryId").replace(".I_",".") , map) );
+			return rMap;
 		}
 		//UPDATE
 		else if( String.valueOf( map.get("queryId") ).contains(".U_") ) {
-			comDao.update( map.get("queryId").replace(".U_",".") , map);
-			return "updated";
+			
+			rMap.put("updated", comDao.update( map.get("queryId").replace(".U_",".") , map) );
+			return rMap;
 		}
 		//DELETE
 		else if( String.valueOf( map.get("queryId") ).contains(".D_") ) {
 			
-			comDao.delete( map.get("queryId").replace(".D_",".") , map);
-			return "deleted";
+			rMap.put("deleted", comDao.delete( map.get("queryId").replace(".D_",".") , map) );
+			return rMap;
 		}
 		
 		return "notFoundQuery";
+	}
+
+	@Override
+	public String pwdChg(HttpServletRequest request) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String, String> map = ComUtil.getParameterMap(request);
+		
+		String oldPwd = ComUtil.decrypt( request.getSession().getAttribute("prK").toString(), map.get("oldPwd") );
+		String newPwd = ComUtil.decrypt( request.getSession().getAttribute("prK").toString(), map.get("pwd") );
+		
+		map.put("id", String.valueOf(request.getSession().getAttribute("LOGIN_ID")) );
+		map.put("pwd", oldPwd);
+		
+		Map<String, Object> rMap = comDao.selectOne( "com.login" , map);
+		
+		//로그인 실패 (아이디 비밀번호 틀림)
+		if(rMap == null) {
+			
+			throw new Exception("기존비밀번호가 일치하지 않습니다.");	
+		}
+		
+		map.put("MEMBER_ID" , String.valueOf(rMap.get("MEMBER_ID"))  );
+		map.put("pwd" , newPwd );
+		comDao.update("com.pwdChg", map);
+		
+		return "1";
 	}
 	
 }

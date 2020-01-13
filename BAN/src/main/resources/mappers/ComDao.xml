@@ -18,28 +18,48 @@
 			 , A.NAME		AS NAME
 			 , A.CDT		AS CDT
 			 , A.USE_YN		AS USE_YN
-			 , B.NICK		AS NICK
-			 , B.EMAIL		AS EMAIL
-			 , B.TEL		AS TEL
+			 , A.NICK		AS NICK
+			 , A.EMAIL		AS EMAIL
+			 , A.TEL		AS TEL
 		  FROM MEMBER A
-	 LEFT JOIN MEMBER_DETAIL B ON A.MEMBER_ID = B.MEMBER_ID
 		 WHERE A.ID = #{LOGIN_ID,jdbcType=VARCHAR}
 	</select>
 	
 	<!--로그인 -->
 	<select id="login" parameterType="hashmap" resultType="hashmap">
-		SELECT A.ID			AS ID
+		SELECT A.MEMBER_ID	AS MEMBER_ID
+			 , A.ID			AS ID
 			 , A.NAME		AS NAME
 			 , A.CDT		AS CDT
 			 , A.USE_YN		AS USE_YN
-			 , B.NICK		AS NICK
-			 , B.EMAIL		AS EMAIL
-			 , B.TEL		AS TEL
+			 , A.NICK		AS NICK
+			 , A.EMAIL		AS EMAIL
+			 , A.TEL		AS TEL
 		  FROM MEMBER A
-	 LEFT JOIN MEMBER_DETAIL B ON A.MEMBER_ID = B.MEMBER_ID
 		 WHERE A.ID = #{id,jdbcType=VARCHAR}
+		   AND A.PWD = #{pwd,jdbcType=VARCHAR}
 	</select>
-		
+	
+	<!--개인정보 변경 -->
+	<update id="myInfoChg" parameterType="hashmap"  >
+		UPDATE MEMBER
+		   SET NAME = #{name,jdbcType=VARCHAR}
+		   	  ,NICK = #{nick,jdbcType=VARCHAR}
+		   	  ,EMAIL = #{Email,jdbcType=VARCHAR}
+		   	  ,TEL = #{tel,jdbcType=VARCHAR}
+		   	  ,MDT = SYSDATE
+		 WHERE USE_YN = '1'
+		   AND ID = #{LOGIN_ID,jdbcType=VARCHAR}
+	</update>
+	
+	<!--비밀번호 변경 -->
+	<update id="pwdChg" parameterType="hashmap" >
+		UPDATE MEMBER
+		   SET PWD = #{pwd,jdbcType=VARCHAR}
+		   	 , MDT = SYSDATE
+		 WHERE MEMBER_ID = #{MEMBER_ID,jdbcType=VARCHAR}
+	</update>
+	
 	<!-- 회원가입 -->
 	<insert id="memberInsert" parameterType="hashmap" >
 		
@@ -47,20 +67,8 @@
 			SELECT MEMBER_S.NEXTVAL FROM DUAL
 		</selectKey>
 		
-		INSERT INTO MEMBER(MEMBER_ID, ID, PWD, NAME)
-		VALUES(#{MID,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
-		
-	</insert>
-	
-	<!-- 회원가입 상세 -->
-	<insert id="memberDetailInsert" parameterType="hashmap" >
-		
-		<selectKey order="BEFORE" keyProperty="MDID" resultType="int">
-			SELECT MEMBER_DETAIL_S.NEXTVAL FROM DUAL
-		</selectKey>
-		
-		INSERT INTO MEMBER_DETAIL(MEMBER_ID, MEMBER_DETAIL_ID, NICK, EMAIL, TEL)
-		VALUES(#{MID,jdbcType=INTEGER}, #{MDID,jdbcType=INTEGER}, #{nick,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR})
+		INSERT INTO MEMBER(MEMBER_ID, ID, PWD, NAME, NICK, EMAIL, TEL)
+		VALUES(#{MID,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, #{Email,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR})
 		
 	</insert>
 	

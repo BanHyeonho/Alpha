@@ -1,5 +1,7 @@
 package ban.controller;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ban.service.ComService;
+import ban.util.OAuthUtil;
 
 /**
  * Handles requests for the application home page.
@@ -32,17 +35,9 @@ public class ComController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/")
 	public String home(Locale locale, Model model) {
-//		logger.info("Welcome home! The client locale is {}.", locale);
-//		
-//		Date date = new Date();
-//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-//		
-//		String formattedDate = dateFormat.format(date);
-//		
-//		model.addAttribute("serverTime", formattedDate );
-		
+
 		return "index";
 	}
 	
@@ -74,6 +69,30 @@ public class ComController {
 		}
 		
 		return rObj;
+	}
+	
+	@RequestMapping(value = "/oauth")
+	public Object oauth(HttpServletRequest request ,HttpServletResponse response){
+		
+		try {
+			OAuthUtil.authorize();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			rObj = e.getMessage();
+			logger.error((String) rObj);
+		}
+		
+		
+		return rObj; 
+	}
+	
+	@RequestMapping(value = "/oauthReceive")
+	public Object oauthReceive(HttpServletRequest request ,HttpServletResponse response){
+		
+		logger.info(response.toString());
+		
+		return response;
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

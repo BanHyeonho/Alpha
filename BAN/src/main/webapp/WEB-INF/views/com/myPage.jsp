@@ -72,12 +72,21 @@
 				</div>
 			</div>
 		</div>
-
+		<div class="form-group col-md-4 no-margin">
+			<div class='form-group col-md-12'>
+				<div class="checkbox no-top-padding">
+					<label class="control-label">
+						<input type="checkbox" id="goCalendar" onchange="goCalAction();" >구글캘린더 연동
+					</label>
+				</div>
+			</div>
+		</div>
 	</form>
 	<div class='pull-right'>
 		<a href='#'>회원탈퇴</a>
 	</div>
 </div>
+
 
 <script type="text/javascript">
 
@@ -92,7 +101,26 @@
 		$( '#pwd' ).keyup(comparePwd);
 		$( '#pwdChk' ).keyup(comparePwd);
 		
+		//구글API연동준비
+// 		parent.handleClientLoad();
 	});
+	
+	//구글캘린더 연동
+	function goCalAction(){
+		
+		if($('#goCalendar').is(':checked')){
+			$('#goCalendar').prop('checked',false);
+			if(confirm('연동시 브라우저가 구글계정에 로그인하게됩니다.\n'
+					  +'개인PC가 아닌경우 사용후 로그아웃하여주시기 바랍니다.\n'
+					  +'연동하시겠습니까?')){
+// 				handleAuthClick(event);			
+// 				location.href='/oauth';
+				utilAjax( null , null , null , '/oauth');
+			}
+		}else{
+// 			handleSignoutClick(event);
+		}
+	}
 	
 	//내정보 가져오기
 	function myInfo(){
@@ -222,4 +250,25 @@
 		} , null , false);
 		
 	}
+	
+	
+	//구글로그인
+	function handleAuthClick(event) {
+		
+		parent.gapi.auth2.getAuthInstance().signIn().then(function(){
+			  
+			  alert('인증완료');
+			  $('#goCalendar').prop('checked',true);
+	  	  },function(error) {
+	  			console.error(error.error);
+	        });;
+	}
+
+	//구글로그아웃
+	function handleSignoutClick(event) {
+		parent.gapi.auth2.getAuthInstance().disconnect();
+		$('#goCalendar').prop('checked',false);
+	}
+	
+	
 </script>

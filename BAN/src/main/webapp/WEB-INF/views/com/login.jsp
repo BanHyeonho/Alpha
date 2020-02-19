@@ -33,6 +33,7 @@
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="button" class="btn btn-default" onclick='login();'>로그인</button>
 				<button type="button" class="btn btn-default" onclick='join();' >회원가입</button>
+				
 			</div>
 		</div>
 	</form>

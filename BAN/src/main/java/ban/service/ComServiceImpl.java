@@ -6,13 +6,13 @@ import java.security.KeyPairGenerator;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import ban.dao.ComDao;
@@ -170,5 +170,32 @@ public class ComServiceImpl implements ComService{
 		
 		return "1";
 	}
-	
+
+	@Override
+	public String insertBatch(HttpServletRequest request) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		for (int i = 0; i < 10; i++) {
+			int j = i;
+			if(i > 5) {
+				j = 5;
+			}
+			map.put("id",String.valueOf(j));
+			map.put("val","value : " + String.valueOf(j));
+			comDao.batchInsert("com.test", map);
+		}
+		
+		
+		
+		return null;
+	}
+
+	@Override
+	public String updateBatch(HttpServletRequest request) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

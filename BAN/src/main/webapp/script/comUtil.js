@@ -23,7 +23,7 @@ function utilAjax( param , before , success , url , async , global , timeout , e
 	var vDataType = utilIsNull( dataType , 'json' );
 	var vAsync = utilIsNull( async , true );
 	var vGlobal = utilIsNull( global , true );
-	var vTimeout = utilIsNull( timeout , 30000 );
+	var vTimeout = utilIsNull( timeout , 3600000 );
 	
 	var vParam = utilIsNull( param , {} );
 	

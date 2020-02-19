@@ -5,13 +5,19 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ComDao {
 
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	@Qualifier("sqlSessionTemplate")
+	SqlSessionTemplate sqlSession;
+	
+	@Autowired
+	@Qualifier("batchSqlSessionTemplate")
+	SqlSessionTemplate batchSqlSessionTemplate;
 	
 	public List<Map> selectList(String queryId, Map param) throws Exception {
 		return sqlSession.selectList(queryId, param);
@@ -38,4 +44,11 @@ public class ComDao {
 		return sqlSession.delete(queryId, map);
 	}
 	
+	public void batchInsert(String queryId, Map map) throws Exception {
+		batchSqlSessionTemplate.insert(queryId, map);
+	}
+	
+	public void batchUpdate(String queryId, Map map) throws Exception {
+		batchSqlSessionTemplate.update(queryId, map);
+	}
 }

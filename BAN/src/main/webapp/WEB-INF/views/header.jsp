@@ -21,7 +21,7 @@
                      <ul class="dropdown-menu" role="menu" style='left: -1;'>
 					    <li><a href="javascript:myPage();">나의 페이지</a></li>
 					    <li class="divider"></li>
-					    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;로그아웃</a></li>
+					    <li><a href="javascript:logout();"><span class="glyphicon glyphicon-log-out"></span>&nbsp;로그아웃</a></li>
 					  </ul>
                 </div>
             </div>
@@ -47,4 +47,13 @@
 	function myPage(){
 		$('#content').attr('src', '/page?menuUrl=myPage');
 	}
+	
+	function logout(){
+// 		//구글인증로그아웃
+// 		var iframe = document.getElementById('content').contentWindow;
+// 		iframe.gapi.auth2.getAuthInstance().disconnect();
+		
+		location.replace('/logout');
+	}
+	
 </script>

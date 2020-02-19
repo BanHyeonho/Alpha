@@ -95,4 +95,12 @@
 		
 	</insert>
 	
+<!-- 	테스트 -->
+	<insert id="test" parameterType="hashmap" >
+		
+		INSERT INTO TEST(TEST_ID,TEST_VALUE)
+		VALUES(#{id,jdbcType=INTEGER},#{val,jdbcType=VARCHAR})
+		
+	</insert>
+	
 </mapper>
